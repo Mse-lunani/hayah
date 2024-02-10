@@ -1,0 +1,11 @@
+{
+  "web": {
+    "client_id": "583046392205-v19h5ch5e49l0rh4hcrofkmb7dcka2ve.apps.googleusercontent.com",
+    "project_id": "hayah-411504",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": "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",
+    "javascript_origins": ["https://hayahafrica.com"]
+  }
+}

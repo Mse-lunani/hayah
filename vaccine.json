@@ -1,0 +1,135 @@
+[
+  {
+    "name": "BCG",
+    "schedule": [
+      {
+        "dose": "1st dose",
+        "day": 0
+      }
+    ]
+  },
+  {
+    "name": "Pneumococcal",
+    "schedule": [
+      {
+        "dose": "1st dose",
+        "day": 42
+      },
+      {
+        "dose": "2nd dose",
+        "day": 70
+      },
+      {
+        "dose": "3rd dose",
+        "day": 98
+      }
+    ]
+  },
+  {
+    "name": "IPV",
+    "schedule": [
+      {
+        "dose": "1st dose",
+        "day": 42
+      },
+      {
+        "dose": "2nd dose",
+        "day": 70
+      },
+      {
+        "dose": "3rd dose",
+        "day": 98
+      }
+    ]
+  },
+  {
+    "name": "Pentavalent",
+    "schedule": [
+      {
+        "dose": "1st dose",
+        "day": 42
+      },
+      {
+        "dose": "2nd dose",
+        "day": 70
+      },
+      {
+        "dose": "3rd dose",
+        "day": 98
+      }
+    ]
+  },
+  {
+    "name": "Measles and Rubella",
+    "schedule": [
+      {
+        "dose": "1st dose",
+        "day": 270
+      },
+      {
+        "dose": "2nd dose",
+        "day": 450
+      }
+    ]
+  },
+  {
+    "name": "Vitamin A",
+    "schedule": [
+      {
+        "dose": "1st dose",
+        "day": 270
+      },
+      {
+        "dose": "2nd dose",
+        "day": 450
+      }
+    ]
+  },
+  {
+    "name": "DPT",
+    "schedule": [
+      {
+        "dose": "1st dose",
+        "day": 42
+      },
+      {
+        "dose": "2nd dose",
+        "day": 70
+      },
+      {
+        "dose": "3rd dose",
+        "day": 98
+      }
+    ]
+  },
+  {
+    "name": "Polio",
+    "schedule": [
+      {
+        "dose": "1st dose",
+        "day": 42
+      },
+      {
+        "dose": "2nd dose",
+        "day": 70
+      },
+      {
+        "dose": "3rd dose",
+        "day": 98
+      }
+    ]
+  },
+  {
+    "name": "Rotavirus",
+    "schedule": [
+      {
+        "dose": "1st dose",
+        "day": 42
+      },
+      {
+        "dose": "2nd dose",
+        "day": 70
+      }
+    ]
+  }
+]
