@@ -2,6 +2,6 @@
   <string name="app_name">hayah</string>
   <string name="expo_splash_screen_resize_mode" translatable="false">cover</string>
   <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
-  <string name="expo_runtime_version">1.0.0</string>
-  <string name="server_client_id">583046392205-061k56bej88br130d15aka54a1qiqrk8.apps.googleusercontent.com</string>
+  <string name="expo_runtime_version">1.0.3</string>
+  <string name="server_client_id">583046392205-pa7i8584mp36j4eokh97v12iapkml7s8.apps.googleusercontent.com</string>
 </resources>

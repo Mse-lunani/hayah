@@ -14,9 +14,11 @@ import { View } from "react-native";
 import { Convo, Human, MessageAI } from "../components/Convo";
 import { useIsFocused } from "@react-navigation/native";
 import Loading from "../components/Loading";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default () => {
   const [loading, setLoading] = React.useState(false);
+  const [thread_id, setThread_id] = React.useState("");
   const [message, setMessage] = React.useState("");
   const flatListRef = React.useRef(null);
   const isFocused = useIsFocused();
@@ -24,8 +26,55 @@ export default () => {
   const styles = useStyleSheet(styles2);
   const theme = useTheme();
   React.useEffect(() => {
-    getmessages();
+    async function fetchData() {
+      await getThread();
+    }
+    fetchData();
   }, []);
+
+  const getThread = async () => {
+    setLoading(true);
+    const value = await AsyncStorage.getItem("thread_id");
+    if (value !== null) {
+      console.log(value);
+      setThread_id(value);
+      setLoading(false);
+      getmessages(value);
+    } else {
+      const val = await CreateThread();
+      getmessages(val);
+    }
+  };
+
+  const CreateThread = async () => {
+    setLoading(true);
+    var myHeaders = new Headers();
+    myHeaders.append("OpenAI-Beta", "assistants=v1");
+    myHeaders.append(
+      "Authorization",
+      "Bearer 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"
+    );
+    myHeaders.append(
+      "Cookie",
+      "__cf_bm=BInrmxC7lAQmCl7k2M3d4ed1lhdSvzdlClPXfI1HL.Q-1707979881-1.0-AQ1u/LUhk7HxvhKUUa4I0rB/4MrJFDtWS5lFDx3bD7G3Cs5eGgux7jq2yuFG58gcg5nciV5gKWQ7kDTG5x/fFLs=; _cfuvid=i35lae4db3.j50XtZbozEm.MK0tKSEASKLTWsRIrAj4-1707979881436-0.0-604800000"
+    );
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    const response = await fetch(
+      "https://api.openai.com/v1/threads",
+      requestOptions
+    );
+    const result = await response.json();
+    await AsyncStorage.setItem("thread_id", result.id);
+    setThread_id(result.id);
+    setLoading(false);
+    return result.id;
+  };
 
   const Message = ({ item }) => {
     if (item.speaker == "AI") {
@@ -36,7 +85,7 @@ export default () => {
 
   const [data, setData] = React.useState([]);
 
-  const getmessages = () => {
+  const getmessages = (thread_id) => {
     setLoading(true);
     var myHeaders = new Headers();
     myHeaders.append("OpenAI-Beta", "assistants=v1");
@@ -49,13 +98,15 @@ export default () => {
       headers: myHeaders,
       redirect: "follow",
     };
+    console.log(thread_id);
 
     fetch(
-      "https://api.openai.com/v1/threads/thread_BKK2Bm5hNqhDU6m2mD1rtv76/messages?order=asc",
+      "https://api.openai.com/v1/threads/" + thread_id + "/messages?order=asc",
       requestOptions
     )
       .then((response) => response.json())
       .then((result) => {
+        console.log(result);
         let temp = [];
         let data = {};
         result.data.forEach((element) => {
@@ -104,7 +155,7 @@ export default () => {
     };
 
     fetch(
-      "https://api.openai.com/v1/threads/thread_BKK2Bm5hNqhDU6m2mD1rtv76/runs",
+      "https://api.openai.com/v1/threads/" + thread_id + "/runs",
       requestOptions
     )
       .then((response) => response.text())
@@ -138,7 +189,7 @@ export default () => {
       };
 
       fetch(
-        "https://api.openai.com/v1/threads/thread_BKK2Bm5hNqhDU6m2mD1rtv76/messages",
+        "https://api.openai.com/v1/threads/" + thread_id + "/messages",
         requestOptions
       )
         .then((response) => response.text())
@@ -148,7 +199,7 @@ export default () => {
           setMessage("");
           runthread();
           setTimeout(() => {
-            getmessages();
+            getmessages(thread_id);
           }, 30000);
         });
     }
@@ -158,7 +209,24 @@ export default () => {
     <>
       <Layout style={styles.parent}>
         {loading && <Loading />}
-        <List data={data} renderItem={Message} ref={flatListRef} />
+        {data.length > 0 && (
+          <List data={data} renderItem={Message} ref={flatListRef} />
+        )}
+
+        {!loading && data.length == 0 && (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ textAlign: "center", margin: 20 }}>
+              Hi am Hera! Please start by asking me a question. I am here to
+              help you.
+            </Text>
+          </View>
+        )}
       </Layout>
       <View style={styles.messagesendbox}>
         <Input

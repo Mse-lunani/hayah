@@ -2,7 +2,7 @@
   "expo": {
     "name": "hayah",
     "slug": "hayah",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -31,7 +31,8 @@
       "permissions": [
         "android.permission.READ_CALENDAR",
         "android.permission.WRITE_CALENDAR"
-      ]
+      ],
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/favicon.png"

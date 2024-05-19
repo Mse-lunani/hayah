@@ -27,6 +27,11 @@ import Calendar from "../screens/Calendar";
 import CreateEvent from "../screens/CreateEvent";
 import SingleEvent from "../screens/SingleEvent";
 import VacccineSchedule from "../screens/VaccineSchedule";
+import Test from "../screens/Test";
+import StartQuestions from "../screens/StartQuestions";
+import LeaderBoardIcon from "../components/LeaderBoardIcon";
+import Questions from "../screens/Questions";
+import LeaderBoard from "../screens/LeaderBoard";
 const Tab = createBottomTabNavigator();
 
 const MybtmStack = () => {
@@ -174,7 +179,11 @@ export default () => {
         <Stack.Screen
           name="AskHayah"
           component={AskHayah}
-          options={{ headerShown: true, headerRight: () => <></> }}
+          options={{
+            headerShown: true,
+            headerTitle: "Ask Hera",
+            headerRight: () => <></>,
+          }}
         />
         <Stack.Screen
           name="Calendar"
@@ -200,6 +209,43 @@ export default () => {
           options={{
             headerShown: true,
             headerTitle: "Vaccine Schedule",
+          }}
+        />
+        <Stack.Screen
+          name="StartQuestions"
+          component={StartQuestions}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerTitle: "Questions",
+            headerRight: (props) => (
+              <LeaderBoardIcon {...props} navigation={navigation} />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="Questions"
+          component={Questions}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerTitle: "Questions",
+            headerRight: (props) => <></>,
+          })}
+        />
+        <Stack.Screen
+          name="LeaderBoard"
+          component={LeaderBoard}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerTitle: "LeaderBoard",
+            headerRight: (props) => <></>,
+          })}
+        />
+        <Stack.Screen
+          name="Test"
+          component={Test}
+          options={{
+            headerShown: true,
+            headerTitle: "Book specialist",
           }}
         />
         <Stack.Screen

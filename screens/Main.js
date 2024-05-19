@@ -2,6 +2,7 @@ import {
   Card,
   Layout,
   List,
+  Modal,
   StyleService,
   Text,
   useStyleSheet,
@@ -17,6 +18,7 @@ import weeks from "../components/Wk";
 import Pregancydata from "../components/Pregancydata";
 import { Fontisto, MaterialCommunityIcons } from "@expo/vector-icons";
 import Loading from "../components/Loading";
+import Quiz from "../components/Quiz";
 
 export default (props) => {
   const [data, setdata] = React.useState(weeks);
@@ -28,6 +30,7 @@ export default (props) => {
   const flatListRef = React.useRef();
   const [daysLeft, setDaysLeft] = React.useState(null);
   const [loading, setloading] = React.useState(false);
+  const [visible, setVisible] = React.useState(false);
 
   const calculateCurrentWeek = (dueDate, cdate) => {
     const currentDate = cdate;
@@ -126,6 +129,11 @@ export default (props) => {
       <Floating
         onPress={() => {
           props.navigation.navigate("AskHayah");
+        }}
+      />
+      <Quiz
+        onPress={() => {
+          props.navigation.navigate("StartQuestions");
         }}
       />
       {loading && <Loading />}
@@ -227,7 +235,7 @@ export default (props) => {
             <Card
               style={{ ...styles.btncard, backgroundColor: "#AF90B1" }}
               onPress={() => {
-                props.navigation.navigate("Calendar");
+                setVisible(true);
               }}
             >
               <Text style={styles.cardTitle}>Log</Text>
@@ -263,6 +271,9 @@ export default (props) => {
               backgroundColor: theme["color-primary-300"],
               margin: 10,
             }}
+            onPress={() => {
+              props.navigation.navigate("Test");
+            }}
           >
             <Text style={styles.cardTitle}>Book Specialist</Text>
             <View style={styles.row2}>
@@ -270,6 +281,54 @@ export default (props) => {
               <Fontisto name="doctor" size={96} color="white" />
             </View>
           </Card>
+
+          <Modal
+            backdropStyle={styles.backdrop}
+            onBackdropPress={() => setVisible(false)}
+            visible={visible}
+          >
+            <Text style={{ ...styles.texttitle, color: "white" }}>
+              Log & Reminders
+            </Text>
+            <View style={styles.row}>
+              <Card
+                style={{ ...styles.btncard, backgroundColor: "#AF90B1" }}
+                onPress={() => {
+                  props.navigation.navigate("Calendar");
+                }}
+              >
+                <Text style={styles.cardTitle}>Calendar</Text>
+                <View style={styles.row2}>
+                  <Text style={styles.cardtext}>Calendar</Text>
+                  <MaterialCommunityIcons
+                    name="calendar-month"
+                    size={80}
+                    color="white"
+                  />
+                </View>
+              </Card>
+              <Card
+                style={{
+                  ...styles.btncard,
+                  backgroundColor: theme["color-danger-300"],
+                  marginLeft: 5,
+                }}
+                onPress={() => {
+                  props.navigation.navigate("VaccineSchedule");
+                }}
+              >
+                <Text style={styles.cardTitle}>Vaccine</Text>
+                <View style={styles.row2}>
+                  <Text style={styles.cardtext}>Vaccine schedule</Text>
+                  <MaterialCommunityIcons
+                    name="needle"
+                    size={80}
+                    color="white"
+                  />
+                </View>
+              </Card>
+            </View>
+          </Modal>
         </Layout>
       </ScrollView>
     </>
@@ -335,5 +394,8 @@ const themedStyles = StyleService.create({
     height: 80,
     width: 80,
     objectFit: "contain",
+  },
+  backdrop: {
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
   },
 });

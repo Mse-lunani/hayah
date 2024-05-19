@@ -33,7 +33,6 @@ const GetSchedule = (due_date) => {
     };
     mainschedule.push(v);
   }
-  console.log(mainschedule[0]);
   return mainschedule;
 };
 export default GetSchedule;

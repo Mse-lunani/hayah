@@ -73,8 +73,13 @@ export default (props) => {
             );
             props.navigation.replace("Main");
           })
-          .catch((e) => {
+          .catch(async (e) => {
             console.log(e);
+            await AsyncStorage.setItem(
+              "due_date",
+              dt.toISOString().split("T")[0]
+            );
+            props.navigation.replace("Main");
           })
           .finally(() => {
             setloading(false);

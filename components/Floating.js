@@ -7,7 +7,7 @@ export default (props) => {
   return (
     <TouchableOpacity style={styles.float} onPress={props.onPress}>
       <Image source={require("../assets/Comment.png")} />
-      <Text style={styles.text}>Ask Hayah</Text>
+      <Text style={styles.text}>Ask Hera</Text>
     </TouchableOpacity>
   );
 };

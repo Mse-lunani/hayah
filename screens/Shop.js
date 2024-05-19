@@ -92,7 +92,7 @@ export default (props) => {
       .finally(() => setloading(false));
   };
   const getcategories = () => {
-    setloading;
+    setloading(true);
     fetch(apiurl + "view_categories.php")
       .then((response) => response.json())
       .then((json) => {
@@ -126,9 +126,11 @@ export default (props) => {
   }, [quantity]);
 
   const Items = ({ item, index }) => {
+    let price = parseInt(item.price);
     return (
       <Product
         {...item}
+        price={price}
         onPress={() => {
           props.navigation.navigate("ProductDetails", {
             item: item,
@@ -184,16 +186,23 @@ export default (props) => {
   return (
     <Layout style={styles.parent}>
       {loading && <Loading />}
+      <Layout style={{ height: 60 }}>
+        <List
+          key={"2"}
+          style={{ height: 0 }}
+          data={categories}
+          renderItem={Cat}
+          horizontal
+        />
+      </Layout>
       <List
-        key={0}
-        style={{ height: 0 }}
-        data={categories}
-        renderItem={Cat}
-        horizontal
         onRefresh={getdata}
         refreshing={loading}
+        key={"1"}
+        data={changingdata}
+        renderItem={Items}
+        numColumns={2}
       />
-      <List key={1} data={changingdata} renderItem={Items} numColumns={2} />
     </Layout>
   );
 };
@@ -208,6 +217,7 @@ const styles2 = StyleService.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 10,
+    padding: 5,
     borderRadius: 10,
   },
 });

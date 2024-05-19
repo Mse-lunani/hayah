@@ -17,6 +17,8 @@ import {
   statusCodes,
 } from "@react-native-google-signin/google-signin";
 import creds from "../creds2.json";
+import * as WebBrowser from "expo-web-browser";
+import Floating_GIF from "../components/Floating_GIF";
 
 export default (props) => {
   const [email, setemail] = React.useState(null);
@@ -62,8 +64,28 @@ export default (props) => {
             );
           }
         })
-        .catch((e) => {
-          Alert.alert("something went wrong", "It seems something went wrong");
+        .catch(async (e) => {
+          let dt = JSON.stringify({
+            name: "Guest",
+            id: "1",
+            email: "guest@gmail.com",
+          });
+          await AsyncStorage.setItem("user", dt);
+          console.log(e);
+          Alert.alert(
+            "something went wrong",
+            "It seems something went wrong, please try the app in guest mode",
+            [
+              {
+                text: "OK",
+                onPress: () => props.navigation.replace("Personal"),
+              },
+              {
+                text: "Try Again",
+                onPress: () => props.navigation.replace("Login"),
+              },
+            ]
+          );
         })
         .finally(() => {
           setloading(false);
@@ -71,14 +93,18 @@ export default (props) => {
     }
   };
 
+  const _handlePressButtonAsync = async () => {
+    let result = await WebBrowser.openBrowserAsync(
+      "https://hayahafrica.com/privacy.html"
+    );
+    setResult(result);
+  };
+
   const signIn = async () => {
     setloading(true);
 
     try {
-      GoogleSignin.configure({
-        //webClientId: creds.web.client_id,
-        scopes: ["https://www.googleapis.com/auth/drive.readonly"],
-      });
+      GoogleSignin.configure();
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       Login2(userInfo.user);
@@ -129,9 +155,24 @@ export default (props) => {
             );
           }
         })
-        .catch((e) => {
+        .catch(async (e) => {
+          let dt = JSON.stringify({
+            name: "Guest",
+            id: "1",
+            email: "guest@gmail.com",
+          });
+          await AsyncStorage.setItem("user", dt);
           console.log(e);
-          Alert.alert("something went wrong", "It seems something went wrong");
+          Alert.alert(
+            "something went wrong",
+            "It seems something went wrong, please try the app in guest mode",
+            [
+              {
+                text: "OK",
+                onPress: () => props.navigation.replace("Personal"),
+              },
+            ]
+          );
         })
         .finally(() => {
           setloading(false);
@@ -191,6 +232,12 @@ export default (props) => {
           create account
         </Text>
       </Text>
+      <Text>
+        By continuing, you agree to our{" "}
+        <Text onPress={_handlePressButtonAsync} status="primary">
+          Terms and conditions
+        </Text>
+      </Text>
       <Divider
         style={{
           margin: 10,
@@ -213,6 +260,11 @@ export default (props) => {
           continue with google
         </Button>
       )}
+      <Floating_GIF
+        onPress={() => {
+          props.navigation.navigate("StartQuestions");
+        }}
+      />
     </Layout>
   );
 };
